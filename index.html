@@ -3,145 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PingWell – Branded Pings for Clients</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>PingWell – Status updates your clients will actually read</title>
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, #1E293B, #2C3E50);
-      color: #F1F5F9;
-      line-height: 1.6;
+      background: linear-gradient(180deg, #F3F4F6 0%, #E5E7EB 100%);
+      color: #1E293B;
     }
     header {
-      padding: 4rem 2rem;
+      padding: 3rem 1rem 2rem;
       text-align: center;
     }
     header h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      color: #ffffff;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
     header p {
       font-size: 1.2rem;
-      color: #CBD5E1;
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      margin-bottom: 1rem;
+      color: #334155;
     }
-    .cta-btn {
+    .cta {
       background-color: #3B82F6;
-      border: none;
       color: white;
-      padding: 0.9rem 2rem;
-      border-radius: 8px;
+      padding: 0.8rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
       font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s ease;
     }
-    .cta-btn:hover {
+    .cta:hover {
       background-color: #2563EB;
     }
-    .section {
-      padding: 4rem 2rem;
-      text-align: center;
+    .hero-stats {
+      margin-top: 1.5rem;
+      color: #475569;
     }
-    .section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #ffffff;
-    }
-    .section p {
-      color: #94A3B8;
-      max-width: 700px;
+    section {
+      padding: 3rem 1rem;
+      max-width: 900px;
       margin: 0 auto;
     }
     .steps {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 2rem;
-      max-width: 900px;
-      margin: 3rem auto 0;
     }
     .step {
-      background: #334155;
+      background: white;
+      border-radius: 1rem;
       padding: 2rem;
-      border-radius: 10px;
-      text-align: left;
-    }
-    .step h3 {
-      margin-top: 0;
-      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
     }
     .ping-preview {
-      background: #1E293B;
-      border: 1px solid #475569;
-      border-radius: 10px;
-      padding: 2rem;
-      margin: 2rem auto;
-      max-width: 600px;
-      color: #E2E8F0;
+      background: #F1F5F9;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #0F172A;
     }
-    .footer {
+    footer {
       text-align: center;
       padding: 2rem;
       font-size: 0.9rem;
-      color: #94A3B8;
-    }
-    @media (min-width: 768px) {
-      .steps {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .step {
-        flex: 1;
-      }
+      color: #64748B;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Send clients polished updates in seconds</h1>
-    <p>No logins, no installs, no inbox clutter — just slick branded pings via link.</p>
-    <button class="cta-btn">Send Your First Ping →</button>
+    <p>No logins. No email threads. Just one clean link.</p>
+    <a href="#how-it-works" class="cta">Send Your First Ping →</a>
+    <div class="hero-stats">Trusted by over 15,000 users globally.</div>
   </header>
 
-  <div class="section">
-    <h2>Over 15,000 users trust PingWell</h2>
-    <p>Freelancers, agencies, and studios use PingWell to stay top-of-mind with clients.</p>
-    <div class="ping-preview">
-      <strong>Ping Preview:</strong><br /><br />
-      <em>Hi Alex, here's a quick update on your design project. View draft ➝</em>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>How it works</h2>
+  <section id="how-it-works">
+    <h2>How PingWell Works</h2>
     <div class="steps">
       <div class="step">
-        <h3>1. Write your message</h3>
-        <p>Quick update, reminder or CTA – no email required.</p>
+        <h3>1. Compose a Ping</h3>
+        <p>Write a quick update, reminder, or request for your client — for example, “Waiting for your feedback” or “Here's your invoice.”</p>
       </div>
       <div class="step">
         <h3>2. Brand it</h3>
-        <p>Add your logo and color. Clients feel it's part of your system.</p>
+        <p>Add your logo and brand color so your ping looks like it came from your agency or studio. It’s clean and professional.</p>
       </div>
       <div class="step">
-        <h3>3. Share the link</h3>
-        <p>Your client gets a clean, focused page. No logins. No distractions.</p>
+        <h3>3. Share Instantly</h3>
+        <p>Your client gets a private link they can open without logging in or installing anything. It works perfectly on mobile and desktop.</p>
+      </div>
+      <div class="step">
+        <h3>4. Stay in Control</h3>
+        <p>Re-send old pings, track if your client viewed the page, and gently nudge if needed. PingWell keeps you on their radar — without being pushy.</p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
-    <h2>Start for free</h2>
-    <p>Get 5 pings/month with custom branding. Upgrade anytime for analytics, vanity URLs and unlimited use.</p>
-    <button class="cta-btn">Start Free →</button>
-  </div>
+  <section>
+    <h2>What Your Client Sees</h2>
+    <div class="ping-preview">
+      <p><strong>From:</strong> Julia @ BrightStudio</p>
+      <p><strong>Subject:</strong> Update on your website design</p>
+      <p>Hi Alex, I’ve made a few tweaks based on your notes. Take a look when you can and let me know what you think.</p>
+      <p><a href="#" style="color: #3B82F6; text-decoration: underline;">View Draft ➝</a></p>
+    </div>
+  </section>
 
-  <div class="footer">
-    Built by indie makers. Loved by modern freelancers. <br />
-    © 2025 PingWell. All rights reserved.
-  </div>
+  <section>
+    <h2>Free vs Pro Plan</h2>
+    <ul>
+      <li>✅ 5 free pings per month</li>
+      <li>✅ Custom branding</li>
+      <li>❌ No analytics</li>
+      <li>❌ No custom URLs</li>
+      <li>💳 Upgrade to Pro – $8/month for unlimited pings, analytics, and vanity URLs</li>
+    </ul>
+  </section>
+
+  <footer>
+    Built by indie makers. Loved by modern freelancers. PingWell © 2025
+  </footer>
 </body>
 </html>
