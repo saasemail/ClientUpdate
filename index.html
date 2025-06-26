@@ -3,154 +3,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PingWell – Branded Pings for Clients</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>PingWell – Professional Client Updates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, #f9fafb, #eef2f7);
-      color: #1e293b;
+      background: linear-gradient(145deg, #1E293B, #0F172A);
+      color: #F8FAFC;
       line-height: 1.6;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      padding: 24px 48px;
     }
-    .logo {
+    header h1 {
+      color: #3B82F6;
       font-size: 24px;
-      font-weight: 700;
-      color: #3b82f6;
+      margin: 0;
     }
-    .upgrade-btn {
-      background: #3b82f6;
+    .btn-upgrade {
+      background: #3B82F6;
       color: white;
       border: none;
       padding: 10px 18px;
-      border-radius: 8px;
       font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
     }
     .hero {
       text-align: center;
-      padding: 80px 20px 60px;
+      padding: 80px 20px 40px;
     }
-    .hero h1 {
-      font-size: 36px;
+    .hero h2 {
+      font-size: 42px;
+      font-weight: 800;
       margin-bottom: 20px;
     }
     .hero p {
       font-size: 18px;
-      margin-bottom: 30px;
-    }
-    .cta-button {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .trust-bar {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #64748b;
-    }
-    .section {
-      padding: 60px 20px;
-      max-width: 1100px;
+      color: #CBD5E1;
+      max-width: 600px;
       margin: auto;
     }
-    .section-title {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 40px;
+    .cta-btn {
+      background: #3B82F6;
+      color: white;
+      border: none;
+      font-size: 16px;
+      padding: 14px 26px;
+      margin-top: 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+    .cta-btn:hover {
+      background: #2563EB;
     }
-    .step {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-      padding: 30px;
-      max-width: 300px;
-      flex: 1 1 250px;
-      text-align: center;
-    }
-    .step h3 {
-      margin-top: 10px;
-      font-size: 20px;
+    .trustbar {
+      margin-top: 24px;
+      color: #94A3B8;
+      font-size: 14px;
     }
     .ping-preview {
-      background: white;
+      background: #F8FAFC;
+      color: #1E293B;
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      max-width: 600px;
-      margin: 0 auto 60px;
-      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .ping-preview h4 {
-      margin-bottom: 10px;
-      color: #3b82f6;
+      margin: 0 0 12px;
+      color: #3B82F6;
+    }
+    .ping-preview p {
+      margin: 0 0 8px;
+    }
+    .ping-preview a {
+      color: #3B82F6;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .how-it-works {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 60px 48px;
+    }
+    .how-step {
+      background: #1E293B;
+      padding: 24px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+    .how-step h3 {
+      color: #3B82F6;
     }
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 32px;
+      color: #94A3B8;
       font-size: 14px;
-      color: #94a3b8;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">PingWell</div>
-    <button class="upgrade-btn">Upgrade</button>
+    <h1>PingWell</h1>
+    <button class="btn-upgrade">Upgrade</button>
   </header>
 
   <section class="hero">
-    <h1>Send clients polished updates in seconds — no logins, no email threads.</h1>
-    <p>Turn status updates, reminders, and nudges into clean branded links clients can view instantly.</p>
-    <button class="cta-button">Send Your First Ping →</button>
-    <div class="trust-bar">Trusted by 15,000+ freelancers, studios and consultants worldwide.</div>
+    <h2>Send clients polished updates in seconds — no logins, no email threads.</h2>
+    <p>Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.</p>
+    <button class="cta-btn">Send Your First Ping →</button>
+    <div class="trustbar">Trusted by 15,000+ freelancers, studios, and consultants worldwide</div>
   </section>
 
-  <div class="section">
-    <div class="ping-preview">
-      <h4>Ping Preview</h4>
-      <p>Hi Alex, here's a quick update on your design project. We've made great progress and would love your feedback.</p>
-      <p><strong><a href="#" style="color:#3b82f6; text-decoration:none;">View Draft →</a></strong></p>
-    </div>
-  </div>
+  <section class="ping-preview">
+    <h4>Ping Preview</h4>
+    <p>Hi Alex, here’s a quick status on the Acme Design Revamp:</p>
+    <p>✅ Homepage redesign approved<br>🕒 Waiting on feedback for mobile UI<br>📦 Final assets ready by Friday</p>
+    <a href="#">View Project Dashboard →</a>
+  </section>
 
-  <div class="section">
-    <h2 class="section-title">How It Works</h2>
-    <div class="steps">
-      <div class="step">
-        <h3>1. Compose Your Message</h3>
-        <p>Write a short update, ask, or reminder. Example: “Waiting on your approval for design draft.”</p>
-      </div>
-      <div class="step">
-        <h3>2. Brand & Style It</h3>
-        <p>Add your logo, pick a color, and personalize the look to match your brand. Looks like it came from your team.</p>
-      </div>
-      <div class="step">
-        <h3>3. Share It Instantly</h3>
-        <p>Copy the branded ping link and send it to your client. No login or download needed on their side.</p>
-      </div>
+  <section class="how-it-works">
+    <div class="how-step">
+      <h3>1. Compose</h3>
+      <p>Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
     </div>
-  </div>
+    <div class="how-step">
+      <h3>2. Brand</h3>
+      <p>Add your logo and custom colors. It’ll look like it came directly from your team.</p>
+    </div>
+    <div class="how-step">
+      <h3>3. Share</h3>
+      <p>Send the unique PingWell link. Clients can view it instantly on any device.</p>
+    </div>
+  </section>
 
   <footer>
-    Built by indie makers. Loved by modern freelancers. | &copy; 2025 PingWell
+    Built by indie makers. Loved by modern freelancers. © 2025 PingWell
   </footer>
 </body>
 </html>
