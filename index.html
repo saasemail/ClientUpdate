@@ -1,69 +1,63 @@
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PingWell</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
 
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-[#0F172A] text-white px-4 sm:px-8 py-12">
-      <header className="flex justify-between items-center mb-12">
-        <h1 className="text-2xl font-bold text-blue-400">PingWell</h1>
-        <Button variant="default" className="bg-blue-600 text-white hover:bg-blue-500">Upgrade</Button>
-      </header>
+  <!-- Header -->
+  <header class="flex justify-between items-center p-6">
+    <h1 class="text-2xl font-bold text-blue-400">PingWell</h1>
+    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition">Upgrade</a>
+  </header>
 
-      <section className="text-center max-w-3xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">\          Send clients polished updates in seconds — no logins, no email threads.
-        </h2>
-        <p className="text-lg text-slate-300 italic mb-4">
-          Clients skip emails. You skip follow-ups. PingWell bridges the gap — instantly.
-        </p>
-        <p className="text-md text-slate-400 mb-6">
-          Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.
-        </p>
-        <Button className="bg-blue-600 text-white px-6 py-3 text-lg hover:bg-blue-500">
-          Send Your First Ping →
-        </Button>
-        <p className="text-sm text-slate-500 mt-4">
-          Trusted by 15,000+ freelancers, studios, and consultants worldwide
-        </p>
-      </section>
+  <!-- Hero Section -->
+  <section class="text-center px-6 py-16 max-w-3xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4">Send clients polished updates in seconds — no logins, no email threads.</h2>
+    <p class="text-lg text-gray-300 mb-6">Clients skip emails. You skip follow-ups. <span class="text-white font-semibold">PingWell bridges the gap — instantly.</span></p>
+    <p class="text-gray-400 mb-6">Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.</p>
+    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded text-lg transition">Send Your First Ping →</a>
+    <p class="text-gray-400 text-sm mt-4">Trusted by 15,000+ freelancers, studios, and consultants worldwide</p>
+  </section>
 
-      <section className="mt-20 max-w-2xl mx-auto bg-slate-800 p-6 rounded-lg shadow-lg">
-        <h3 className="text-blue-400 font-semibold text-lg mb-2">Ping Preview</h3>
-        <p className="text-white mb-2">Hi Alex, here's a quick status on the Acme Design Revamp:</p>
-        <ul className="list-none text-white text-sm space-y-1">
-          <li>✅ Homepage redesign approved</li>
-          <li>🕒 Waiting on feedback for mobile UI</li>
-          <li>📦 Final assets ready by Friday</li>
-        </ul>
-        <a href="#" className="text-blue-400 font-medium mt-3 inline-block">View Project Dashboard →</a>
-      </section>
+  <!-- Ping Preview -->
+  <section class="bg-white text-gray-900 rounded-xl shadow-lg p-6 max-w-md mx-auto mb-16">
+    <h3 class="font-bold text-blue-600 mb-2">Ping Preview</h3>
+    <p class="mb-2">Hi Alex, here's a quick status on the Acme Design Revamp:</p>
+    <ul class="mb-4 space-y-1">
+      <li>✅ Homepage redesign approved</li>
+      <li>🕒 Waiting on feedback for mobile UI</li>
+      <li>📦 Final assets ready by Friday</li>
+    </ul>
+    <a href="#" class="text-blue-600 hover:underline font-medium">View Project Dashboard →</a>
+  </section>
 
-      <section className="mt-24 text-center max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8">How It Works</h2>
-        <div className="grid sm:grid-cols-3 gap-8 text-left">
-          <div className="bg-slate-800 p-6 rounded-lg shadow">
-            <h3 className="text-blue-400 text-xl font-bold mb-2">1. Compose</h3>
-            <p className="text-slate-300 text-sm">
-              Write a quick update, reminder or call-to-action — just like sending a chat message.
-            </p>
-          </div>
-          <div className="bg-slate-800 p-6 rounded-lg shadow">
-            <h3 className="text-blue-400 text-xl font-bold mb-2">2. Brand</h3>
-            <p className="text-slate-300 text-sm">
-              Add your logo and custom colors. It’ll look like it came directly from your team, not a generic tool.
-            </p>
-          </div>
-          <div className="bg-slate-800 p-6 rounded-lg shadow">
-            <h3 className="text-blue-400 text-xl font-bold mb-2">3. Share</h3>
-            <p className="text-slate-300 text-sm">
-              Send the unique PingWell link. Clients can view it instantly on any device — no installs, no confusion.
-            </p>
-          </div>
-        </div>
+  <!-- How it works -->
+  <section class="bg-gray-800 py-16 px-6">
+    <h2 class="text-center text-3xl font-bold text-white mb-10">How It Works</h2>
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div>
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">1. Compose</h3>
+        <p class="text-gray-300">Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">2. Brand</h3>
+        <p class="text-gray-300">Add your logo and custom colors. It’ll look like it came directly from your team.</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">3. Share</h3>
+        <p class="text-gray-300">Send the unique PingWell link. Clients can view it instantly on any device.</p>
+      </div>
+    </div>
+  </section>
 
-        <div className="mt-12 text-slate-400 text-sm">
-          Built by indie makers. Loved by modern freelancers. © 2025 PingWell
-        </div>
-      </section>
-    </main>
-  )
-}
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 text-sm py-6">
+    Built by indie makers. Loved by modern freelancers. © 2025 PingWell
+  </footer>
+
+</body>
+</html>
