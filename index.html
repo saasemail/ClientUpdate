@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PingWell</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-900 text-white font-sans">
     <header class="flex justify-between items-center px-8 py-6">
@@ -26,7 +23,7 @@
         Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.
       </p>
       <div class="mt-6">
-        <a href="#ping-form" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
+        <a href="#ping-composer" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
           Send Your First Ping →
         </a>
       </div>
@@ -53,63 +50,15 @@
       <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
         <div>
           <h3 class="text-xl font-bold text-blue-400">1. Compose</h3>
-          <p class="text-gray-300 mt-2">Write a clear update, question, or call to action — just like a quick message.</p>
+          <p class="text-gray-300 mt-2">Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
         </div>
         <div>
           <h3 class="text-xl font-bold text-blue-400">2. Brand</h3>
-          <p class="text-gray-300 mt-2">Add your logo and personal branding — PingWell pings look like they're from your business.</p>
+          <p class="text-gray-300 mt-2">Add your logo and custom colors. It’ll look like it came directly from your team.</p>
         </div>
         <div>
           <h3 class="text-xl font-bold text-blue-400">3. Share</h3>
-          <p class="text-gray-300 mt-2">Send a link. Clients open it instantly on any device — no login or install needed.</p>
-        </div>
-      </div>
-      <p class="text-center text-sm text-gray-400 mt-10 max-w-3xl mx-auto">
-        PingWell helps you send updates, reminders, and simple client check-ins as smart links. Clients can reply, confirm, or take action in seconds — without digging through emails.
-      </p>
-    </section>
-
-    <!-- Ping Composer -->
-    <section id="ping-form" class="bg-white text-gray-900 py-12 px-6">
-      <div class="max-w-xl mx-auto">
-        <h2 class="text-2xl font-bold text-center mb-6">Send Your First Ping</h2>
-        <form class="bg-gray-100 p-6 rounded-lg shadow space-y-4">
-          <div>
-            <label class="block font-semibold mb-1">Client Name</label>
-            <input type="text" placeholder="Alex R." class="w-full px-4 py-2 rounded border border-gray-300" />
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Project or Topic</label>
-            <input type="text" placeholder="Acme Redesign" class="w-full px-4 py-2 rounded border border-gray-300" />
-          </div>
-          <div>
-            <label class="block font-semibold mb-1">Message</label>
-            <textarea placeholder="Quick status update..." class="w-full px-4 py-2 rounded border border-gray-300"></textarea>
-          </div>
-          <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded">
-            Generate Ping Link
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="bg-white text-gray-900 py-12 px-6">
-      <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-2xl font-bold mb-8">What professionals say about PingWell</h2>
-        <div class="grid md:grid-cols-3 gap-6 text-left">
-          <div class="bg-gray-100 p-6 rounded-lg shadow">
-            <p class="italic">“Our clients actually reply now — PingWell makes updates easy and fast.”</p>
-            <p class="mt-4 font-semibold text-sm text-gray-800">— Alex R., Creative Studio</p>
-          </div>
-          <div class="bg-gray-100 p-6 rounded-lg shadow">
-            <p class="italic">“No more confusing email threads. We just ping and move on.”</p>
-            <p class="mt-4 font-semibold text-sm text-gray-800">— Maria F., Freelancer</p>
-          </div>
-          <div class="bg-gray-100 p-6 rounded-lg shadow">
-            <p class="italic">“PingWell made our client communication feel 10x more professional.”</p>
-            <p class="mt-4 font-semibold text-sm text-gray-800">— Studio Orion</p>
-          </div>
+          <p class="text-gray-300 mt-2">Send the unique PingWell link. Clients can view it instantly on any device.</p>
         </div>
       </div>
     </section>
@@ -135,9 +84,64 @@
       </div>
     </section>
 
+    <!-- Ping Composer -->
+    <section id="ping-composer" class="bg-white text-gray-900 py-16 px-6">
+      <div class="max-w-xl mx-auto">
+        <p class="text-center text-gray-600 mb-6">
+          PingWell helps you send updates, reminders, and simple client check-ins
+          as smart links. Clients can reply, confirm, or take action in seconds —
+          without digging through emails.
+        </p>
+        <h2 class="text-2xl font-bold text-center mb-6">Send Your First Ping</h2>
+        <form id="pingForm" class="space-y-4">
+          <div>
+            <label for="clientName" class="block text-sm font-medium">Client Name</label>
+            <input id="clientName" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Alex R." required />
+          </div>
+          <div>
+            <label for="project" class="block text-sm font-medium">Project or Topic</label>
+            <input id="project" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Acme Redesign" required />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium">Message</label>
+            <textarea id="message" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Quick status update..." required></textarea>
+          </div>
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Generate Ping Link</button>
+        </form>
+        <div id="pingResult" class="mt-6 hidden text-center">
+          <p class="text-green-600 font-semibold">Ping link created:</p>
+          <input id="pingLink" type="text" class="w-full mt-2 px-4 py-2 bg-gray-100 text-sm text-gray-800 rounded" readonly />
+          <button onclick="copyLink()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Copy Link</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-12 py-10 text-center text-gray-400 text-sm">
       <p>&copy; 2025 PingWell. Built with love by indie makers. Used by teams in 40+ countries.</p>
     </footer>
+
+    <!-- Script -->
+    <script>
+      const form = document.getElementById('pingForm');
+      const pingResult = document.getElementById('pingResult');
+      const pingLink = document.getElementById('pingLink');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const client = document.getElementById('clientName').value.trim();
+        const project = document.getElementById('project').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const encoded = btoa(`${client}:${project}:${message}`);
+        const link = `https://pingwell.vercel.app/ping/${encoded}`;
+        pingLink.value = link;
+        pingResult.classList.remove('hidden');
+      });
+      function copyLink() {
+        pingLink.select();
+        pingLink.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        alert('Link copied to clipboard!');
+      }
+    </script>
   </body>
 </html>
