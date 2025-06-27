@@ -26,7 +26,7 @@
         Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.
       </p>
       <div class="mt-6">
-        <a href="#" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
+        <a href="#ping-form" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
           Send Your First Ping →
         </a>
       </div>
@@ -53,16 +53,43 @@
       <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
         <div>
           <h3 class="text-xl font-bold text-blue-400">1. Compose</h3>
-          <p class="text-gray-300 mt-2">Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
+          <p class="text-gray-300 mt-2">Write a clear update, question, or call to action — just like a quick message.</p>
         </div>
         <div>
           <h3 class="text-xl font-bold text-blue-400">2. Brand</h3>
-          <p class="text-gray-300 mt-2">Add your logo and custom colors. It’ll look like it came directly from your team.</p>
+          <p class="text-gray-300 mt-2">Add your logo and personal branding — PingWell pings look like they're from your business.</p>
         </div>
         <div>
           <h3 class="text-xl font-bold text-blue-400">3. Share</h3>
-          <p class="text-gray-300 mt-2">Send the unique PingWell link. Clients can view it instantly on any device.</p>
+          <p class="text-gray-300 mt-2">Send a link. Clients open it instantly on any device — no login or install needed.</p>
         </div>
+      </div>
+      <p class="text-center text-sm text-gray-400 mt-10 max-w-3xl mx-auto">
+        PingWell helps you send updates, reminders, and simple client check-ins as smart links. Clients can reply, confirm, or take action in seconds — without digging through emails.
+      </p>
+    </section>
+
+    <!-- Ping Composer -->
+    <section id="ping-form" class="bg-white text-gray-900 py-12 px-6">
+      <div class="max-w-xl mx-auto">
+        <h2 class="text-2xl font-bold text-center mb-6">Send Your First Ping</h2>
+        <form class="bg-gray-100 p-6 rounded-lg shadow space-y-4">
+          <div>
+            <label class="block font-semibold mb-1">Client Name</label>
+            <input type="text" placeholder="Alex R." class="w-full px-4 py-2 rounded border border-gray-300" />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Project or Topic</label>
+            <input type="text" placeholder="Acme Redesign" class="w-full px-4 py-2 rounded border border-gray-300" />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Message</label>
+            <textarea placeholder="Quick status update..." class="w-full px-4 py-2 rounded border border-gray-300"></textarea>
+          </div>
+          <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded">
+            Generate Ping Link
+          </button>
+        </form>
       </div>
     </section>
 
