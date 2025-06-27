@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/ping/:slug",
-      "destination": "/404.html"
+      "destination": "/pingwell.html"
     }
   ]
 }
