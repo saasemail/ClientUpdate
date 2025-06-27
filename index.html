@@ -4,45 +4,110 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PingWell</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   </head>
   <body class="bg-gray-900 text-white font-sans">
-    <!-- Composer Form -->
-    <section class="bg-white text-gray-900 py-16 px-6 min-h-screen flex items-center justify-center">
-      <div class="max-w-xl w-full">
+    <header class="flex justify-between items-center px-8 py-6">
+      <h1 class="text-2xl font-bold text-blue-400">PingWell</h1>
+      <a href="#" class="bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded font-semibold">Upgrade</a>
+    </header>
+
+    <main class="text-center px-6">
+      <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mt-8">
+        Send clients polished updates in seconds — no logins, no email threads.
+      </h2>
+      <p class="mt-4 text-lg text-gray-300">
+        Clients skip emails. You skip follow-ups. PingWell bridges the gap — instantly.
+      </p>
+      <p class="mt-2 text-gray-400">
+        Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.
+      </p>
+      <div class="mt-6">
+        <a href="#ping-composer" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
+          Send Your First Ping →
+        </a>
+      </div>
+      <p class="mt-3 text-sm text-gray-400">
+        Trusted by 15,000+ freelancers, studios, and consultants worldwide.
+      </p>
+    </main>
+
+    <!-- Ping Preview -->
+    <section class="bg-white text-gray-900 rounded-lg shadow-md max-w-xl mx-auto my-12 p-6">
+      <h3 class="text-lg font-semibold text-blue-600 mb-3">Ping Preview</h3>
+      <p>Hi Alex, here's a quick status on the Acme Design Revamp:</p>
+      <ul class="mt-3 space-y-1">
+        <li>✅ Homepage redesign approved</li>
+        <li>⏳ Waiting on feedback for mobile UI</li>
+        <li>📦 Final assets ready by Friday</li>
+      </ul>
+      <a href="#" class="mt-4 inline-block text-blue-600 font-semibold">View Project Dashboard →</a>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-12 px-6 bg-gray-800">
+      <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
+        <div>
+          <h3 class="text-xl font-bold text-blue-400">1. Compose</h3>
+          <p class="text-gray-300 mt-2">Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-blue-400">2. Brand</h3>
+          <p class="text-gray-300 mt-2">Add your logo and custom colors. It’ll look like it came directly from your team.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-blue-400">3. Share</h3>
+          <p class="text-gray-300 mt-2">Send the unique PingWell link. Clients can view it instantly on any device.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="bg-gray-800 text-white py-12 px-6">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-8">Why teams switch to PingWell</h2>
+        <div class="grid md:grid-cols-3 gap-6 text-left">
+          <div>
+            <h3 class="font-bold text-lg text-blue-400">No Logins, No Friction</h3>
+            <p class="text-gray-300 mt-2">Clients open links instantly. No accounts, no app installs, no confusion.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-blue-400">Fully Branded</h3>
+            <p class="text-gray-300 mt-2">Customize with your own logo and colors. Looks like it came from your team.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg text-blue-400">Privacy First</h3>
+            <p class="text-gray-300 mt-2">We don’t track clients or require any personal data to view updates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ping Composer -->
+    <section id="ping-composer" class="bg-white text-gray-900 py-16 px-6">
+      <div class="max-w-xl mx-auto">
         <p class="text-center text-gray-600 mb-6">
-          PingWell helps you send updates, reminders, and client check-ins as smart links. Clients can view & act without email clutter.
+          PingWell helps you send updates, reminders, and simple client check-ins
+          as smart links. Clients can reply, confirm, or take action in seconds —
+          without digging through emails.
         </p>
         <h2 class="text-2xl font-bold text-center mb-6">Send Your First Ping</h2>
         <form id="pingForm" class="space-y-4">
-          <div>
-            <label for="sender" class="block text-sm font-medium">Your Name or Company</label>
-            <input id="sender" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Frank / Acme Co." required />
-          </div>
           <div>
             <label for="clientName" class="block text-sm font-medium">Client Name</label>
             <input id="clientName" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Alex R." required />
           </div>
           <div>
             <label for="project" class="block text-sm font-medium">Project or Topic</label>
-            <input id="project" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Website Redesign" required />
+            <input id="project" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Acme Redesign" required />
           </div>
           <div>
             <label for="message" class="block text-sm font-medium">Message</label>
-            <textarea id="message" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Quick update on your project..." required></textarea>
+            <textarea id="message" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Quick status update..." required></textarea>
           </div>
-          <div>
-            <label for="logo" class="block text-sm font-medium">Your Logo (Optional)</label>
-            <input id="logo" type="file" accept="image/*" class="w-full text-sm" />
-          </div>
-          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-            Generate Ping Link
-          </button>
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Generate Ping Link</button>
         </form>
-
         <div id="pingResult" class="mt-6 hidden text-center">
           <p class="text-green-600 font-semibold">Ping link created:</p>
           <input id="pingLink" type="text" class="w-full mt-2 px-4 py-2 bg-gray-100 text-sm text-gray-800 rounded" readonly />
@@ -51,86 +116,31 @@
       </div>
     </section>
 
-    <!-- Ping Viewer -->
-    <section id="pingView" class="hidden bg-white text-gray-900 min-h-screen flex items-center justify-center px-6">
-      <div class="max-w-xl w-full text-center">
-        <img id="logoDisplay" src="" class="h-16 mx-auto mb-4 hidden" alt="Sender Logo" />
-        <h2 id="pingHeader" class="text-2xl font-bold mb-4"></h2>
-        <div class="bg-gray-100 rounded p-6 text-left shadow">
-          <p><strong>Client:</strong> <span id="pingClient"></span></p>
-          <p><strong>Project:</strong> <span id="pingProject"></span></p>
-          <p class="mt-2"><strong>Message:</strong></p>
-          <p id="pingMessage" class="mt-1"></p>
-        </div>
-      </div>
-    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-700 mt-12 py-10 text-center text-gray-400 text-sm">
+      <p>&copy; 2025 PingWell. Built with love by indie makers. Used by teams in 40+ countries.</p>
+    </footer>
 
+    <!-- Script -->
     <script>
-      const path = window.location.pathname;
-
-      if (path.startsWith('/ping/')) {
-        document.querySelector('section').classList.add('hidden');
-        document.getElementById('pingView').classList.remove('hidden');
-
-        const data = decodeURIComponent(path.split('/ping/')[1]);
-        try {
-          const decoded = JSON.parse(atob(data));
-          document.getElementById('pingHeader').textContent = `${decoded.sender} sent you a quick update 🔔`;
-          document.getElementById('pingClient').textContent = decoded.client;
-          document.getElementById('pingProject').textContent = decoded.project;
-          document.getElementById('pingMessage').textContent = decoded.message;
-
-          if (decoded.logo) {
-            const logo = document.getElementById('logoDisplay');
-            logo.src = decoded.logo;
-            logo.classList.remove('hidden');
-          }
-        } catch (e) {
-          document.getElementById('pingHeader').textContent = 'Invalid Ping Link';
-        }
-      }
-
       const form = document.getElementById('pingForm');
-      if (form) {
-        const pingResult = document.getElementById('pingResult');
-        const pingLink = document.getElementById('pingLink');
-        const logoInput = document.getElementById('logo');
-
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          const sender = document.getElementById('sender').value.trim();
-          const client = document.getElementById('clientName').value.trim();
-          const project = document.getElementById('project').value.trim();
-          const message = document.getElementById('message').value.trim();
-          let logoBase64 = '';
-
-          if (logoInput.files.length > 0) {
-            const file = logoInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function (event) {
-              logoBase64 = event.target.result;
-              finalizeLink();
-            };
-            reader.readAsDataURL(file);
-          } else {
-            finalizeLink();
-          }
-
-          function finalizeLink() {
-            const payload = { sender, client, project, message, logo: logoBase64 };
-            const encoded = btoa(JSON.stringify(payload));
-            const link = `${window.location.origin}/ping/${encoded}`;
-            pingLink.value = link;
-            pingResult.classList.remove('hidden');
-          }
-        });
-
-        window.copyLink = function () {
-          pingLink.select();
-          pingLink.setSelectionRange(0, 99999);
-          document.execCommand('copy');
-          alert('Link copied to clipboard!');
-        };
+      const pingResult = document.getElementById('pingResult');
+      const pingLink = document.getElementById('pingLink');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const client = document.getElementById('clientName').value.trim();
+        const project = document.getElementById('project').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const encoded = btoa(`${client}:${project}:${message}`);
+        const link = `https://pingwell.vercel.app/ping/${encoded}`;
+        pingLink.value = link;
+        pingResult.classList.remove('hidden');
+      });
+      function copyLink() {
+        pingLink.select();
+        pingLink.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        alert('Link copied to clipboard!');
       }
     </script>
   </body>
