@@ -1,8 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/ping/:slug",
-      "destination": "/pingwell.html"
-    }
+    { "source": "/ping/:path*", "destination": "/404.html" }
   ]
 }
