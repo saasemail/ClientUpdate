@@ -1,110 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PingWell</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  </head>
-  <body class="bg-gray-900 text-white font-sans">
-    <!-- Composer Form -->
-    <section class="bg-white text-gray-900 py-16 px-6 min-h-screen flex items-center justify-center">
-      <div class="max-w-xl w-full">
-        <p class="text-center text-gray-600 mb-6">
-          PingWell helps you send updates, reminders, and client check-ins as smart links. Clients can view & act without email clutter.
-        </p>
-        <h2 class="text-2xl font-bold text-center mb-6">Send Your First Ping</h2>
-        <form id="pingForm" class="space-y-4">
-          <div>
-            <label for="sender" class="block text-sm font-medium">Your Name or Company</label>
-            <input id="sender" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Frank / Acme Co." required />
-          </div>
-          <div>
-            <label for="clientName" class="block text-sm font-medium">Client Name</label>
-            <input id="clientName" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Alex R." required />
-          </div>
-          <div>
-            <label for="project" class="block text-sm font-medium">Project or Topic</label>
-            <input id="project" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Website Redesign" required />
-          </div>
-          <div>
-            <label for="message" class="block text-sm font-medium">Message</label>
-            <textarea id="message" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Quick update on your project..." required></textarea>
-          </div>
-          <div>
-            <label for="logo" class="block text-sm font-medium">Your Logo (Optional)</label>
-            <input id="logo" type="file" accept="image/*" class="w-full text-sm" />
-          </div>
-          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-            Generate Ping Link
-          </button>
-        </form>
-        <div id="pingResult" class="mt-6 hidden text-center">
-          <p class="text-green-600 font-semibold">Ping link created:</p>
-          <input id="pingLink" type="text" class="w-full mt-2 px-4 py-2 bg-gray-100 text-sm text-gray-800 rounded" readonly />
-          <button onclick="copyLink()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Copy Link</button>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PingWell</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+<!-- Composer Form -->
+<section class="bg-white text-gray-900 py-16 px-6 min-h-screen flex items-center justify-center">
+  <div class="max-w-xl w-full">
+    <p class="text-center text-gray-600 mb-6">
+      PingWell helps you send updates, reminders, and client check-ins as smart links.
+    </p>
+    <h2 class="text-2xl font-bold text-center mb-6">Send Your Ping</h2>
+    <form id="pingForm" class="space-y-4">
+      <div>
+        <label for="sender" class="block text-sm font-medium">Your Name or Company</label>
+        <input id="sender" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Frank / Acme Co." required />
       </div>
-    </section>
+      <div>
+        <label for="clientName" class="block text-sm font-medium">Client Name</label>
+        <input id="clientName" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Alex R." required />
+      </div>
+      <div>
+        <label for="project" class="block text-sm font-medium">Project or Topic</label>
+        <input id="project" type="text" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Website Redesign" required />
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium">Message</label>
+        <textarea id="message" class="w-full px-4 py-2 rounded bg-gray-100" placeholder="Quick update on your project..." required></textarea>
+      </div>
+      <div>
+        <label for="logo" class="block text-sm font-medium">Your Logo (Optional)</label>
+        <input id="logo" type="file" accept="image/*" class="w-full text-sm" />
+      </div>
+      <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+        Generate Ping Link
+      </button>
+    </form>
+    <div id="pingResult" class="mt-6 hidden text-center">
+      <p class="text-green-600 font-semibold">Ping link created:</p>
+      <input id="pingLink" type="text" class="w-full mt-2 px-4 py-2 bg-gray-100 text-sm text-gray-800 rounded" readonly />
+      <button onclick="copyLink()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Copy Link</button>
+    </div>
+  </div>
+</section>
 
-    <script>
-      const SUPABASE_URL = 'https://jzjyauagjmemcavdijfj.supabase.co';
-      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0';
-      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+  const supabaseUrl = 'https://jzjyauagjmemcavdijfj.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0';
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-      const form = document.getElementById('pingForm');
-      const pingResult = document.getElementById('pingResult');
-      const pingLink = document.getElementById('pingLink');
-      const logoInput = document.getElementById('logo');
+  const form = document.getElementById('pingForm');
+  const pingResult = document.getElementById('pingResult');
+  const pingLink = document.getElementById('pingLink');
+  const logoInput = document.getElementById('logo');
 
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-        const sender = document.getElementById('sender').value.trim();
-        const client = document.getElementById('clientName').value.trim();
-        const project = document.getElementById('project').value.trim();
-        const message = document.getElementById('message').value.trim();
+    const sender = document.getElementById('sender').value.trim();
+    const client = document.getElementById('clientName').value.trim();
+    const project = document.getElementById('project').value.trim();
+    const message = document.getElementById('message').value.trim();
 
-        let logoBase64 = '';
-        if (logoInput.files.length > 0) {
-          const file = logoInput.files[0];
-          const reader = new FileReader();
-          reader.onload = async function (event) {
-            logoBase64 = event.target.result;
-            await saveToSupabase();
-          };
-          reader.readAsDataURL(file);
-        } else {
-          await saveToSupabase();
-        }
+    let logoBase64 = '';
+    if (logoInput.files.length > 0) {
+      const file = logoInput.files[0];
+      logoBase64 = await toBase64(file);
+    }
 
-        async function saveToSupabase() {
-          const { data, error } = await supabase.from('pings').insert([
-            { sender, client, project, message, logo: logoBase64 }
-          ]);
+    const { data, error } = await supabase.from('pings').insert([
+      { sender, client, project, message, logo: logoBase64 }
+    ]).select().single();
 
-          if (error) {
-            alert('Error saving ping: ' + error.message);
-            return;
-          }
+    if (error) {
+      alert("Error saving ping: " + error.message);
+      return;
+    }
 
-          const id = data[0].id;
-          const link = `${window.location.origin}/view.html?id=${id}`;
-          pingLink.value = link;
-          pingResult.classList.remove('hidden');
-        }
-      });
+    const link = `${window.location.origin}/ping/${data.id}`;
+    pingLink.value = link;
+    pingResult.classList.remove('hidden');
+  });
 
-      function copyLink() {
-        pingLink.select();
-        pingLink.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        alert('Link copied to clipboard!');
-      }
-    </script>
-  </body>
+  function copyLink() {
+    pingLink.select();
+    document.execCommand('copy');
+    alert('Link copied to clipboard!');
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+</script>
+
+</body>
 </html>
