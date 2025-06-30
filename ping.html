@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PingWell</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   </head>
   <body class="bg-gray-900 text-white font-sans">
     <section class="bg-white text-gray-900 py-16 px-6 min-h-screen flex items-center justify-center">
@@ -34,7 +38,9 @@
             <label for="logo" class="block text-sm font-medium">Your Logo (Optional)</label>
             <input id="logo" type="file" accept="image/*" class="w-full text-sm" />
           </div>
-          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Generate Ping Link</button>
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+            Generate Ping Link
+          </button>
         </form>
         <div id="pingResult" class="mt-6 hidden text-center">
           <p class="text-green-600 font-semibold">Ping link created:</p>
@@ -57,87 +63,90 @@
       </div>
     </section>
 
-    <script type="module">
-      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-      const supabase = createClient(
-        'https://jzjyauagjmemcavdijfj.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
-      );
+    <script>
+      const SUPABASE_URL = 'https://jzjyauagjmemcavdijfj.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0';
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      const form = document.getElementById('pingForm');
-      const pingResult = document.getElementById('pingResult');
-      const pingLink = document.getElementById('pingLink');
-      const logoInput = document.getElementById('logo');
-
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        const sender = document.getElementById('sender').value.trim();
-        const client = document.getElementById('clientName').value.trim();
-        const project = document.getElementById('project').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        let logoBase64 = '';
-        if (logoInput.files.length > 0) {
-          const file = logoInput.files[0];
-          const reader = new FileReader();
-          reader.onload = async function (event) {
-            logoBase64 = event.target.result;
-            await insertAndGenerate();
-          };
-          reader.readAsDataURL(file);
-        } else {
-          await insertAndGenerate();
-        }
-
-        async function insertAndGenerate() {
-          const { data, error } = await supabase.from('pings').insert([
-            { sender, client, project, message, logo: logoBase64 }
-          ]).select();
-
-          if (error || !data || data.length === 0) {
-            alert('Error generating link.');
-            return;
-          }
-
-          const id = data[0].id;
-          const link = `${window.location.origin}/ping/${id}`;
-          pingLink.value = link;
-          pingResult.classList.remove('hidden');
-        }
-      });
-
-      window.copyLink = function () {
-        pingLink.select();
-        pingLink.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        alert('Link copied to clipboard!');
-      };
-
-      // Viewer mode
       const path = window.location.pathname;
       if (path.startsWith('/ping/')) {
         document.querySelector('section').classList.add('hidden');
         document.getElementById('pingView').classList.remove('hidden');
-        const id = path.split('/ping/')[1];
-        fetchPing(id);
+        const pingId = path.split('/ping/')[1];
+
+        supabase
+          .from('pings')
+          .select('*')
+          .eq('id', pingId)
+          .single()
+          .then(({ data, error }) => {
+            if (error || !data) {
+              document.getElementById('pingHeader').textContent = 'Invalid Ping Link';
+              return;
+            }
+            document.getElementById('pingHeader').textContent = `${data.sender} sent you a quick update 🔔`;
+            document.getElementById('pingClient').textContent = data.client;
+            document.getElementById('pingProject').textContent = data.project;
+            document.getElementById('pingMessage').textContent = data.message;
+            if (data.logo) {
+              const logo = document.getElementById('logoDisplay');
+              logo.src = data.logo;
+              logo.classList.remove('hidden');
+            }
+          });
       }
 
-      async function fetchPing(id) {
-        const { data, error } = await supabase.from('pings').select('*').eq('id', id).single();
-        if (error || !data) {
-          document.getElementById('pingHeader').textContent = 'Invalid Ping Link';
-          return;
-        }
-        document.getElementById('pingHeader').textContent = `${data.sender} sent you a quick update 🔔`;
-        document.getElementById('pingClient').textContent = data.client;
-        document.getElementById('pingProject').textContent = data.project;
-        document.getElementById('pingMessage').textContent = data.message;
-        if (data.logo) {
-          const logo = document.getElementById('logoDisplay');
-          logo.src = data.logo;
-          logo.classList.remove('hidden');
-        }
+      const form = document.getElementById('pingForm');
+      if (form) {
+        const pingResult = document.getElementById('pingResult');
+        const pingLink = document.getElementById('pingLink');
+        const logoInput = document.getElementById('logo');
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const sender = document.getElementById('sender').value.trim();
+          const client = document.getElementById('clientName').value.trim();
+          const project = document.getElementById('project').value.trim();
+          const message = document.getElementById('message').value.trim();
+
+          let logoBase64 = '';
+          if (logoInput.files.length > 0) {
+            const file = logoInput.files[0];
+            const reader = new FileReader();
+            reader.onload = async function (event) {
+              logoBase64 = event.target.result;
+              await submitPing();
+            };
+            reader.readAsDataURL(file);
+          } else {
+            await submitPing();
+          }
+
+          async function submitPing() {
+            const { data, error } = await supabase
+              .from('pings')
+              .insert([{ sender, client, project, message, logo: logoBase64 }])
+              .select();
+
+            if (error || !data || !data[0]) {
+              console.error('Supabase insert error:', error);
+              alert('Error generating link.');
+              return;
+            }
+
+            const id = data[0].id;
+            const link = `${window.location.origin}/ping/${id}`;
+            pingLink.value = link;
+            pingResult.classList.remove('hidden');
+          }
+        });
+
+        window.copyLink = function () {
+          pingLink.select();
+          pingLink.setSelectionRange(0, 99999);
+          document.execCommand('copy');
+          alert('Link copied to clipboard!');
+        };
       }
     </script>
   </body>
