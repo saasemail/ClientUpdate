@@ -8,6 +8,7 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   </head>
   <body class="bg-gray-900 text-white font-sans">
     <!-- Composer Form -->
@@ -42,7 +43,6 @@
             Generate Ping Link
           </button>
         </form>
-
         <div id="pingResult" class="mt-6 hidden text-center">
           <p class="text-green-600 font-semibold">Ping link created:</p>
           <input id="pingLink" type="text" class="w-full mt-2 px-4 py-2 bg-gray-100 text-sm text-gray-800 rounded" readonly />
@@ -51,86 +51,59 @@
       </div>
     </section>
 
-    <!-- Ping Viewer -->
-    <section id="pingView" class="hidden bg-white text-gray-900 min-h-screen flex items-center justify-center px-6">
-      <div class="max-w-xl w-full text-center">
-        <img id="logoDisplay" src="" class="h-16 mx-auto mb-4 hidden" alt="Sender Logo" />
-        <h2 id="pingHeader" class="text-2xl font-bold mb-4"></h2>
-        <div class="bg-gray-100 rounded p-6 text-left shadow">
-          <p><strong>Client:</strong> <span id="pingClient"></span></p>
-          <p><strong>Project:</strong> <span id="pingProject"></span></p>
-          <p class="mt-2"><strong>Message:</strong></p>
-          <p id="pingMessage" class="mt-1"></p>
-        </div>
-      </div>
-    </section>
-
     <script>
-      const path = window.location.pathname;
-
-      if (path.startsWith('/ping/')) {
-        document.querySelector('section').classList.add('hidden');
-        document.getElementById('pingView').classList.remove('hidden');
-
-        const data = decodeURIComponent(path.split('/ping/')[1]);
-        try {
-          const decoded = JSON.parse(atob(data));
-          document.getElementById('pingHeader').textContent = `${decoded.sender} sent you a quick update 🔔`;
-          document.getElementById('pingClient').textContent = decoded.client;
-          document.getElementById('pingProject').textContent = decoded.project;
-          document.getElementById('pingMessage').textContent = decoded.message;
-
-          if (decoded.logo) {
-            const logo = document.getElementById('logoDisplay');
-            logo.src = decoded.logo;
-            logo.classList.remove('hidden');
-          }
-        } catch (e) {
-          document.getElementById('pingHeader').textContent = 'Invalid Ping Link';
-        }
-      }
+      const SUPABASE_URL = 'https://jzjyauagjmemcavdijfj.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0';
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
       const form = document.getElementById('pingForm');
-      if (form) {
-        const pingResult = document.getElementById('pingResult');
-        const pingLink = document.getElementById('pingLink');
-        const logoInput = document.getElementById('logo');
+      const pingResult = document.getElementById('pingResult');
+      const pingLink = document.getElementById('pingLink');
+      const logoInput = document.getElementById('logo');
 
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          const sender = document.getElementById('sender').value.trim();
-          const client = document.getElementById('clientName').value.trim();
-          const project = document.getElementById('project').value.trim();
-          const message = document.getElementById('message').value.trim();
-          let logoBase64 = '';
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-          if (logoInput.files.length > 0) {
-            const file = logoInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function (event) {
-              logoBase64 = event.target.result;
-              finalizeLink();
-            };
-            reader.readAsDataURL(file);
-          } else {
-            finalizeLink();
+        const sender = document.getElementById('sender').value.trim();
+        const client = document.getElementById('clientName').value.trim();
+        const project = document.getElementById('project').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        let logoBase64 = '';
+        if (logoInput.files.length > 0) {
+          const file = logoInput.files[0];
+          const reader = new FileReader();
+          reader.onload = async function (event) {
+            logoBase64 = event.target.result;
+            await saveToSupabase();
+          };
+          reader.readAsDataURL(file);
+        } else {
+          await saveToSupabase();
+        }
+
+        async function saveToSupabase() {
+          const { data, error } = await supabase.from('pings').insert([
+            { sender, client, project, message, logo: logoBase64 }
+          ]);
+
+          if (error) {
+            alert('Error saving ping: ' + error.message);
+            return;
           }
 
-          function finalizeLink() {
-            const payload = { sender, client, project, message, logo: logoBase64 };
-            const encoded = btoa(JSON.stringify(payload));
-            const link = `${window.location.origin}/ping/${encoded}`;
-            pingLink.value = link;
-            pingResult.classList.remove('hidden');
-          }
-        });
+          const id = data[0].id;
+          const link = `${window.location.origin}/view.html?id=${id}`;
+          pingLink.value = link;
+          pingResult.classList.remove('hidden');
+        }
+      });
 
-        window.copyLink = function () {
-          pingLink.select();
-          pingLink.setSelectionRange(0, 99999);
-          document.execCommand('copy');
-          alert('Link copied to clipboard!');
-        };
+      function copyLink() {
+        pingLink.select();
+        pingLink.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        alert('Link copied to clipboard!');
       }
     </script>
   </body>
