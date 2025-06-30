@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PingWell</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body class="bg-gray-900 text-white font-sans">
     <header class="flex justify-between items-center px-8 py-6">
@@ -12,79 +13,62 @@
       <a href="#" class="bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded font-semibold">Upgrade</a>
     </header>
 
-    <main class="text-center px-6">
-      <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mt-8">
-        Send clients polished updates in seconds — no logins, no email threads.
-      </h2>
-      <p class="mt-4 text-lg text-gray-300">
-        Clients skip emails. You skip follow-ups. PingWell bridges the gap — instantly.
-      </p>
-      <p class="mt-2 text-gray-400">
-        Share clean branded links instead of messy follow-ups. Works perfectly on mobile, no accounts or installs required.
-      </p>
-      <div class="mt-6">
-        <a href="/ping.html" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-white font-semibold shadow">
-          Send Your Ping →
-        </a>
-      </div>
-      <p class="mt-3 text-sm text-gray-400">
-        Trusted by 15,000+ freelancers, studios, and consultants worldwide.
-      </p>
+    <main class="max-w-xl mx-auto px-6">
+      <h2 class="text-4xl font-extrabold text-center mt-8">Send clients polished updates in seconds</h2>
+      <p class="text-center mt-2 text-gray-400">PingWell helps you send updates, reminders, and client check-ins as smart links. Clients can view & act without email clutter.</p>
+
+      <form id="pingForm" class="bg-gray-800 p-6 mt-8 rounded-lg shadow-md space-y-4">
+        <input type="text" name="sender" placeholder="Your Name or Company" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
+        <input type="text" name="client" placeholder="Client Name" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
+        <input type="text" name="project" placeholder="Project Name" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
+        <textarea name="message" placeholder="Update message…" rows="4" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400"></textarea>
+        <input type="url" name="logo" placeholder="Logo URL (optional)" class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 w-full py-3 rounded font-semibold">Send Your Ping</button>
+      </form>
+
+      <div id="result" class="mt-4 text-center text-green-400 font-semibold hidden"></div>
     </main>
 
-    <!-- Ping Preview -->
-    <section class="bg-white text-gray-900 rounded-lg shadow-md max-w-xl mx-auto my-12 p-6">
-      <h3 class="text-lg font-semibold text-blue-600 mb-3">Ping Preview</h3>
-      <p>Hi Alex, here's a quick status on the Acme Design Revamp:</p>
-      <ul class="mt-3 space-y-1">
-        <li>✅ Homepage redesign approved</li>
-        <li>⏳ Waiting on feedback for mobile UI</li>
-        <li>📦 Final assets ready by Friday</li>
-      </ul>
-      <a href="#" class="mt-4 inline-block text-blue-600 font-semibold">View Project Dashboard →</a>
-    </section>
+    <script>
+      const supabase = supabase.createClient(
+        'https://jzjyauagjmemcavdijfj.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
+      );
 
-    <!-- How It Works -->
-    <section class="py-12 px-6 bg-gray-800">
-      <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
-        <div>
-          <h3 class="text-xl font-bold text-blue-400">1. Compose</h3>
-          <p class="text-gray-300 mt-2">Write a quick update, reminder or call-to-action — just like sending a chat message.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-blue-400">2. Brand</h3>
-          <p class="text-gray-300 mt-2">Add your logo and custom colors. It’ll look like it came directly from your team.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-blue-400">3. Share</h3>
-          <p class="text-gray-300 mt-2">Send the unique PingWell link. Clients can view it instantly on any device.</p>
-        </div>
-      </div>
-    </section>
+      const form = document.getElementById('pingForm');
+      const resultDiv = document.getElementById('result');
 
-    <!-- Benefits -->
-    <section class="bg-gray-800 text-white py-12 px-6">
-      <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-2xl font-bold mb-8">Why teams switch to PingWell</h2>
-        <div class="grid md:grid-cols-3 gap-6 text-left">
-          <div>
-            <h3 class="font-bold text-lg text-blue-400">No Logins, No Friction</h3>
-            <p class="text-gray-300 mt-2">Clients open links instantly. No accounts, no app installs, no confusion.</p>
-          </div>
-          <div>
-            <h3 class="font-bold text-lg text-blue-400">Fully Branded</h3>
-            <p class="text-gray-300 mt-2">Customize with your own logo and colors. Looks like it came from your team.</p>
-          </div>
-          <div>
-            <h3 class="font-bold text-lg text-blue-400">Privacy First</h3>
-            <p class="text-gray-300 mt-2">We don’t track clients or require any personal data to view updates.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    <!-- Footer -->
+        const formData = new FormData(form);
+        const sender = formData.get('sender');
+        const client = formData.get('client');
+        const project = formData.get('project');
+        const message = formData.get('message');
+        const logo = formData.get('logo');
+
+        const { data, error } = await supabase.from('pings').insert([
+          { sender, client, project, message, logo }
+        ]).select();
+
+        if (error) {
+          console.error('Supabase insert error:', error);
+          resultDiv.textContent = "Error generating link.";
+          resultDiv.classList.remove('text-green-400');
+          resultDiv.classList.add('text-red-400');
+          resultDiv.classList.remove('hidden');
+        } else {
+          const id = data[0].id;
+          resultDiv.textContent = `Ping generated! Share this link: https://pingwell.vercel.app/ping/${id}`;
+          resultDiv.classList.remove('hidden');
+          resultDiv.classList.remove('text-red-400');
+          resultDiv.classList.add('text-green-400');
+          form.reset();
+        }
+      });
+    </script>
+
     <footer class="bg-gray-900 border-t border-gray-700 mt-12 py-10 text-center text-gray-400 text-sm">
       <p>&copy; 2025 PingWell. Built with love by indie makers. Used by teams in 40+ countries.</p>
     </footer>
