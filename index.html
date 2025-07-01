@@ -31,10 +31,17 @@
       <input id="client" type="text" placeholder="Client Name or Email" class="w-full border px-4 py-2 rounded-md" />
       <textarea id="message" placeholder="Write your update message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
 
-      <!-- Upload -->
+      <!-- Upload Logo -->
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Logo or file to include (image, PDF, ZIP)</label>
-        <input id="file" type="file" accept="image/*,.pdf,.zip" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+        <label class="block text-sm font-medium text-gray-700">Upload Logo (image only)</label>
+        <input id="logo" type="file" accept="image/*" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+        <img id="logoPreview" src="" alt="" class="hidden mt-2 max-h-24 mx-auto rounded-md shadow" />
+      </div>
+
+      <!-- Upload Project File -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">Attach Project File (PDF, ZIP, etc.)</label>
+        <input id="projectFile" type="file" accept=".pdf,.zip,.png,.jpg,.jpeg" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
       </div>
 
       <button id="sendBtn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
@@ -59,41 +66,67 @@
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
       )
 
+      // Logo preview
+      document.getElementById('logo').onchange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+          const url = URL.createObjectURL(file)
+          const img = document.getElementById('logoPreview')
+          img.src = url
+          img.classList.remove('hidden')
+        }
+      }
+
       document.getElementById('sendBtn').onclick = async () => {
         const company = document.getElementById('company').value
         const client = document.getElementById('client').value
         const message = document.getElementById('message').value
-        const fileInput = document.getElementById('file')
+        const logoInput = document.getElementById('logo')
+        const fileInput = document.getElementById('projectFile')
         const resultBox = document.getElementById('result')
 
+        let logoUrl = ''
         let fileUrl = ''
 
-        if (fileInput.files.length > 0) {
-          const file = fileInput.files[0]
-          const fileName = Date.now() + '_' + file.name
+        // Upload Logo
+        if (logoInput.files.length > 0) {
+          const logoFile = logoInput.files[0]
+          const logoName = Date.now() + '_logo_' + logoFile.name
 
-          const { data, error } = await supabase.storage
+          const { error: logoErr } = await supabase.storage
             .from('uploads')
-            .upload(fileName, file)
+            .upload(logoName, logoFile)
 
-          if (error) {
-            resultBox.innerText = 'Upload failed: ' + error.message
-            resultBox.classList.remove('hidden')
-            resultBox.classList.add('bg-red-100', 'text-red-800')
-            return
+          if (!logoErr) {
+            const { data: logoLink } = supabase.storage
+              .from('uploads')
+              .getPublicUrl(logoName)
+            logoUrl = logoLink.publicUrl
           }
+        }
 
-          const { data: publicUrl } = supabase.storage
+        // Upload Project File
+        if (fileInput.files.length > 0) {
+          const projFile = fileInput.files[0]
+          const fileName = Date.now() + '_project_' + projFile.name
+
+          const { error: projErr } = await supabase.storage
             .from('uploads')
-            .getPublicUrl(fileName)
+            .upload(fileName, projFile)
 
-          fileUrl = publicUrl.publicUrl
+          if (!projErr) {
+            const { data: fileLink } = supabase.storage
+              .from('uploads')
+              .getPublicUrl(fileName)
+            fileUrl = fileLink.publicUrl
+          }
         }
 
         const finalMsg = `
 ✅ Update sent to: ${client}
 🧾 From: ${company}
 📝 Message: ${message}
+${logoUrl ? `🏷️ Logo: ${logoUrl}` : ''}
 ${fileUrl ? `📎 File: ${fileUrl}` : ''}
         `.trim()
 
