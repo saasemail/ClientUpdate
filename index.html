@@ -12,7 +12,7 @@
     <nav class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       <h1 class="text-2xl font-bold tracking-tight">ClientUpdate</h1>
       <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-        Upgrade
+        Pro Plan
       </button>
     </nav>
 
@@ -20,25 +20,32 @@
     <section class="text-center mt-12 px-4">
       <h2 class="text-4xl font-bold mb-4">Send Smart Client Updates Instantly</h2>
       <p class="text-lg text-gray-600 max-w-xl mx-auto">
-        Create professional status updates, reminders, and briefings with just one link.
+        ClientUpdate helps you send brief project updates, check-ins, and reminders via smart links – no logins or emails required.
       </p>
+      <p class="text-sm text-gray-500 mt-4">Used by freelancers, agencies, and consultants worldwide.</p>
     </section>
 
     <!-- 🔹 Ping Form -->
     <section class="max-w-xl mx-auto mt-12 bg-white shadow-md rounded-xl p-6 space-y-4">
       <input type="text" placeholder="Your Company Name" class="w-full border px-4 py-2 rounded-md" />
       <input type="text" placeholder="Client Name or Email" class="w-full border px-4 py-2 rounded-md" />
-      <textarea placeholder="Write your message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
-      <input type="text" placeholder="Optional Logo URL" class="w-full border px-4 py-2 rounded-md" />
+      <textarea placeholder="Write your update message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
+
+      <!-- Logo Upload -->
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">Upload Logo (optional)</label>
+        <input type="file" accept="image/*" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+      </div>
+
       <button class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
         Send Your Ping
       </button>
     </section>
 
-    <!-- 🔹 Pro Feature Modal Placeholder -->
-    <div id="upgrade-modal" class="hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t rounded-t-xl p-6 z-50">
-      <!-- Pro modal content will go here later -->
-    </div>
+    <!-- 🔹 Footer -->
+    <footer class="text-center text-sm text-gray-500 mt-20 pb-10">
+      © 2025 ClientUpdate — Built with love. Trusted by teams in 40+ countries.
+    </footer>
 
   </body>
 </html>
