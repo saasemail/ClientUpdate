@@ -3,74 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PingWell</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>ClientUpdate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-900 text-white font-sans">
-    <header class="flex justify-between items-center px-8 py-6">
-      <h1 class="text-2xl font-bold text-blue-400">PingWell</h1>
-      <a href="#" class="bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded font-semibold">Upgrade</a>
-    </header>
+  <body class="bg-gray-50 text-gray-900 font-sans">
 
-    <main class="max-w-xl mx-auto px-6">
-      <h2 class="text-4xl font-extrabold text-center mt-8">Send clients polished updates in seconds</h2>
-      <p class="text-center mt-2 text-gray-400">PingWell helps you send updates, reminders, and client check-ins as smart links. Clients can view & act without email clutter.</p>
+    <!-- 🔹 Navigation -->
+    <nav class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+      <h1 class="text-2xl font-bold tracking-tight">ClientUpdate</h1>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+        Upgrade
+      </button>
+    </nav>
 
-      <form id="pingForm" class="bg-gray-800 p-6 mt-8 rounded-lg shadow-md space-y-4">
-        <input type="text" name="sender" placeholder="Your Name or Company" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
-        <input type="text" name="client" placeholder="Client Name" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
-        <input type="text" name="project" placeholder="Project Name" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
-        <textarea name="message" placeholder="Update message…" rows="4" required class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400"></textarea>
-        <input type="url" name="logo" placeholder="Logo URL (optional)" class="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-400" />
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 w-full py-3 rounded font-semibold">Send Your Ping</button>
-      </form>
+    <!-- 🔹 Hero Section -->
+    <section class="text-center mt-12 px-4">
+      <h2 class="text-4xl font-bold mb-4">Send Smart Client Updates Instantly</h2>
+      <p class="text-lg text-gray-600 max-w-xl mx-auto">
+        Create professional status updates, reminders, and briefings with just one link.
+      </p>
+    </section>
 
-      <div id="result" class="mt-4 text-center text-green-400 font-semibold hidden"></div>
-    </main>
+    <!-- 🔹 Ping Form -->
+    <section class="max-w-xl mx-auto mt-12 bg-white shadow-md rounded-xl p-6 space-y-4">
+      <input type="text" placeholder="Your Company Name" class="w-full border px-4 py-2 rounded-md" />
+      <input type="text" placeholder="Client Name or Email" class="w-full border px-4 py-2 rounded-md" />
+      <textarea placeholder="Write your message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
+      <input type="text" placeholder="Optional Logo URL" class="w-full border px-4 py-2 rounded-md" />
+      <button class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+        Send Your Ping
+      </button>
+    </section>
 
-    <script>
-      const supabase = supabase.createClient(
-        'https://jzjyauagjmemcavdijfj.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
-      );
+    <!-- 🔹 Pro Feature Modal Placeholder -->
+    <div id="upgrade-modal" class="hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t rounded-t-xl p-6 z-50">
+      <!-- Pro modal content will go here later -->
+    </div>
 
-      const form = document.getElementById('pingForm');
-      const resultDiv = document.getElementById('result');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-        const sender = formData.get('sender');
-        const client = formData.get('client');
-        const project = formData.get('project');
-        const message = formData.get('message');
-        const logo = formData.get('logo');
-
-        const { data, error } = await supabase.from('pings').insert([
-          { sender, client, project, message, logo }
-        ]).select();
-
-        if (error) {
-          console.error('Supabase insert error:', error);
-          resultDiv.textContent = "Error generating link.";
-          resultDiv.classList.remove('text-green-400');
-          resultDiv.classList.add('text-red-400');
-          resultDiv.classList.remove('hidden');
-        } else {
-          const id = data[0].id;
-          resultDiv.textContent = `Ping generated! Share this link: https://pingwell.vercel.app/ping/${id}`;
-          resultDiv.classList.remove('hidden');
-          resultDiv.classList.remove('text-red-400');
-          resultDiv.classList.add('text-green-400');
-          form.reset();
-        }
-      });
-    </script>
-
-    <footer class="bg-gray-900 border-t border-gray-700 mt-12 py-10 text-center text-gray-400 text-sm">
-      <p>&copy; 2025 PingWell. Built with love by indie makers. Used by teams in 40+ countries.</p>
-    </footer>
   </body>
 </html>
