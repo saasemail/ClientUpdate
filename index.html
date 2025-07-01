@@ -8,7 +8,7 @@
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans">
 
-    <!-- 🔹 Navigation -->
+    <!-- Navigation -->
     <nav class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       <h1 class="text-2xl font-bold tracking-tight">ClientUpdate</h1>
       <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
@@ -16,7 +16,7 @@
       </button>
     </nav>
 
-    <!-- 🔹 Hero -->
+    <!-- Hero -->
     <section class="text-center mt-12 px-4">
       <h2 class="text-4xl font-bold mb-4">Send Smart Client Updates Instantly</h2>
       <p class="text-lg text-gray-600 max-w-xl mx-auto">
@@ -25,20 +25,20 @@
       <p class="text-sm text-gray-500 mt-4">Used by freelancers, agencies, and consultants worldwide.</p>
     </section>
 
-    <!-- 🔹 Form -->
+    <!-- Form -->
     <section class="max-w-xl mx-auto mt-12 bg-white shadow-md rounded-xl p-6 space-y-4">
       <input id="company" type="text" placeholder="Your or Company Name" class="w-full border px-4 py-2 rounded-md" />
       <input id="client" type="text" placeholder="Client Name or Email" class="w-full border px-4 py-2 rounded-md" />
       <textarea id="message" placeholder="Write your update message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
 
-      <!-- Upload Logo -->
+      <!-- Logo Upload -->
       <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-700">Upload Logo (image only)</label>
         <input id="logo" type="file" accept="image/*" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
         <img id="logoPreview" src="" alt="" class="hidden mt-2 max-h-24 mx-auto rounded-md shadow" />
       </div>
 
-      <!-- Upload Project File -->
+      <!-- Project File Upload -->
       <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-700">Attach Project File (PDF, ZIP, etc.)</label>
         <input id="projectFile" type="file" accept=".pdf,.zip,.png,.jpg,.jpeg" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
@@ -47,17 +47,42 @@
       <button id="sendBtn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
         Send Your Ping
       </button>
-
-      <!-- Ping Result -->
-      <div id="result" class="mt-6 hidden border p-4 rounded-md bg-green-50 text-green-800 whitespace-pre-wrap"></div>
     </section>
 
-    <!-- 🔹 Footer -->
+    <!-- Ping Card -->
+    <section id="pingCardContainer" class="max-w-xl mx-auto mt-10 hidden">
+      <div class="bg-white rounded-xl shadow-lg p-6 space-y-4 border border-gray-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-xl font-bold" id="pingCompany">Company Name</h3>
+            <p class="text-sm text-gray-600" id="pingClient">To: client@example.com</p>
+          </div>
+          <img id="pingLogo" src="" alt="Logo" class="hidden h-12 w-12 rounded-md object-contain border" />
+        </div>
+
+        <div class="bg-gray-50 rounded-md p-4 border border-dashed text-gray-800 text-sm" id="pingMessage">
+          Message content here.
+        </div>
+
+        <div id="pingFileWrapper" class="hidden">
+          <a href="#" id="pingFileLink" target="_blank" class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
+            📎 View Attached File
+          </a>
+        </div>
+
+        <button onclick="copyPing()" class="mt-2 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 text-sm">
+          📋 Copy Ping
+        </button>
+        <p id="copyConfirm" class="text-green-600 text-sm hidden">Copied to clipboard ✅</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="text-center text-sm text-gray-500 mt-20 pb-10">
       © 2025 ClientUpdate — Built with love. Trusted by teams in 40+ countries.
     </footer>
 
-    <!-- 🔹 Supabase Upload Script -->
+    <!-- Supabase + Script -->
     <script type="module">
       import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
@@ -66,7 +91,6 @@
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
       )
 
-      // Logo preview
       document.getElementById('logo').onchange = (e) => {
         const file = e.target.files[0]
         if (file) {
@@ -83,7 +107,6 @@
         const message = document.getElementById('message').value
         const logoInput = document.getElementById('logo')
         const fileInput = document.getElementById('projectFile')
-        const resultBox = document.getElementById('result')
 
         let logoUrl = ''
         let fileUrl = ''
@@ -92,15 +115,9 @@
         if (logoInput.files.length > 0) {
           const logoFile = logoInput.files[0]
           const logoName = Date.now() + '_logo_' + logoFile.name
-
-          const { error: logoErr } = await supabase.storage
-            .from('uploads')
-            .upload(logoName, logoFile)
-
+          const { error: logoErr } = await supabase.storage.from('uploads').upload(logoName, logoFile)
           if (!logoErr) {
-            const { data: logoLink } = supabase.storage
-              .from('uploads')
-              .getPublicUrl(logoName)
+            const { data: logoLink } = supabase.storage.from('uploads').getPublicUrl(logoName)
             logoUrl = logoLink.publicUrl
           }
         }
@@ -109,31 +126,62 @@
         if (fileInput.files.length > 0) {
           const projFile = fileInput.files[0]
           const fileName = Date.now() + '_project_' + projFile.name
-
-          const { error: projErr } = await supabase.storage
-            .from('uploads')
-            .upload(fileName, projFile)
-
+          const { error: projErr } = await supabase.storage.from('uploads').upload(fileName, projFile)
           if (!projErr) {
-            const { data: fileLink } = supabase.storage
-              .from('uploads')
-              .getPublicUrl(fileName)
+            const { data: fileLink } = supabase.storage.from('uploads').getPublicUrl(fileName)
             fileUrl = fileLink.publicUrl
           }
         }
 
-        const finalMsg = `
-✅ Update sent to: ${client}
-🧾 From: ${company}
-📝 Message: ${message}
-${logoUrl ? `🏷️ Logo: ${logoUrl}` : ''}
-${fileUrl ? `📎 File: ${fileUrl}` : ''}
+        // Popuni karticu
+        document.getElementById('pingCompany').innerText = company
+        document.getElementById('pingClient').innerText = 'To: ' + client
+        document.getElementById('pingMessage').innerText = message
+
+        // Logo
+        const pingLogo = document.getElementById('pingLogo')
+        if (logoUrl) {
+          pingLogo.src = logoUrl
+          pingLogo.classList.remove('hidden')
+        } else {
+          pingLogo.classList.add('hidden')
+        }
+
+        // Fajl
+        const pingFileWrapper = document.getElementById('pingFileWrapper')
+        if (fileUrl) {
+          document.getElementById('pingFileLink').href = fileUrl
+          pingFileWrapper.classList.remove('hidden')
+        } else {
+          pingFileWrapper.classList.add('hidden')
+        }
+
+        document.getElementById('pingCardContainer').classList.remove('hidden')
+      }
+
+      // Copy to clipboard
+      window.copyPing = () => {
+        const company = document.getElementById('pingCompany').innerText
+        const client = document.getElementById('pingClient').innerText
+        const message = document.getElementById('pingMessage').innerText
+        const file = document.getElementById('pingFileLink').href
+        const logo = document.getElementById('pingLogo').src
+
+        const output = `
+ClientUpdate Ping:
+
+🧾 ${company}
+📩 ${client}
+📝 ${message}
+${file ? `📎 File: ${file}` : ''}
+${logo ? `🏷️ Logo: ${logo}` : ''}
         `.trim()
 
-        resultBox.innerText = finalMsg
-        resultBox.classList.remove('hidden')
-        resultBox.classList.remove('bg-red-100', 'text-red-800')
-        resultBox.classList.add('bg-green-50', 'text-green-800')
+        navigator.clipboard.writeText(output)
+        document.getElementById('copyConfirm').classList.remove('hidden')
+        setTimeout(() => {
+          document.getElementById('copyConfirm').classList.add('hidden')
+        }, 2000)
       }
     </script>
   </body>
