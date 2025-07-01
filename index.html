@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClientUpdate</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .modal {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 50;
+      }
+    </style>
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans">
 
-    <!-- Navigation -->
+    <!-- 🔹 Navigation -->
     <nav class="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       <h1 class="text-2xl font-bold tracking-tight">ClientUpdate</h1>
       <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
@@ -16,7 +27,7 @@
       </button>
     </nav>
 
-    <!-- Hero -->
+    <!-- 🔹 Hero -->
     <section class="text-center mt-12 px-4">
       <h2 class="text-4xl font-bold mb-4">Send Smart Client Updates Instantly</h2>
       <p class="text-lg text-gray-600 max-w-xl mx-auto">
@@ -25,64 +36,71 @@
       <p class="text-sm text-gray-500 mt-4">Used by freelancers, agencies, and consultants worldwide.</p>
     </section>
 
-    <!-- Form -->
+    <!-- 🔹 Form -->
     <section class="max-w-xl mx-auto mt-12 bg-white shadow-md rounded-xl p-6 space-y-4">
       <input id="company" type="text" placeholder="Your or Company Name" class="w-full border px-4 py-2 rounded-md" />
       <input id="client" type="text" placeholder="Client Name or Email" class="w-full border px-4 py-2 rounded-md" />
       <textarea id="message" placeholder="Write your update message..." rows="4" class="w-full border px-4 py-2 rounded-md"></textarea>
 
-      <!-- Logo Upload -->
+      <!-- Uploads -->
       <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-700">Upload Logo (image only)</label>
-        <input id="logo" type="file" accept="image/*" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-        <img id="logoPreview" src="" alt="" class="hidden mt-2 max-h-24 mx-auto rounded-md shadow" />
+        <input id="logo" type="file" accept="image/*" class="w-full border rounded-md px-4 py-2" />
       </div>
-
-      <!-- Project File Upload -->
       <div class="space-y-2">
-        <label class="block text-sm font-medium text-gray-700">Attach Project File (PDF, ZIP, etc.)</label>
-        <input id="projectFile" type="file" accept=".pdf,.zip,.png,.jpg,.jpeg" class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+        <label class="block text-sm font-medium text-gray-700">Attach Project File</label>
+        <input id="projectFile" type="file" accept=".pdf,.zip,.png,.jpg" class="w-full border rounded-md px-4 py-2" />
       </div>
 
-      <button id="sendBtn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-        Send Your Ping
+      <!-- Preview Button -->
+      <button id="previewBtn" class="w-full mt-6 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+        Preview Ping
       </button>
     </section>
+    <!-- 🔹 Preview Modal -->
+    <div id="previewModal" class="modal hidden">
+      <div class="bg-white max-w-md w-full rounded-lg p-6 relative">
 
-    <!-- Ping Card -->
-    <section id="pingCardContainer" class="max-w-xl mx-auto mt-10 hidden">
-      <div class="bg-white rounded-xl shadow-lg p-6 space-y-4 border border-gray-200">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-xl font-bold" id="pingCompany">Company Name</h3>
-            <p class="text-sm text-gray-600" id="pingClient">To: client@example.com</p>
+        <!-- Close Button -->
+        <button onclick="closePreview()" class="absolute top-3 right-4 text-gray-500 text-xl hover:text-black">×</button>
+
+        <!-- Ping Card -->
+        <div class="space-y-4">
+          <div class="text-center">
+            <h3 id="previewCompany" class="text-xl font-bold"></h3>
+            <p id="previewClient" class="text-sm text-gray-600"></p>
           </div>
-          <img id="pingLogo" src="" alt="Logo" class="hidden h-12 w-12 rounded-md object-contain border" />
-        </div>
 
-        <div class="bg-gray-50 rounded-md p-4 border border-dashed text-gray-800 text-sm" id="pingMessage">
-          Message content here.
-        </div>
+          <div class="text-sm bg-gray-50 border rounded-md p-4" id="previewMessage"></div>
 
-        <div id="pingFileWrapper" class="hidden">
-          <a href="#" id="pingFileLink" target="_blank" class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-200">
-            📎 View Attached File
-          </a>
-        </div>
+          <img id="previewLogo" src="" alt="Logo" class="hidden h-20 mx-auto rounded-md border" />
 
-        <button onclick="copyPing()" class="mt-2 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 text-sm">
-          📋 Copy Ping
-        </button>
-        <p id="copyConfirm" class="text-green-600 text-sm hidden">Copied to clipboard ✅</p>
+          <a id="previewFileLink" href="#" target="_blank" class="hidden block mt-2 text-center text-blue-600 hover:underline">📎 View Project File</a>
+
+          <!-- Generate Ping -->
+          <button id="generateLinkBtn" class="w-full mt-6 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">
+            Generate Ping Link
+          </button>
+
+          <!-- Ping Link + Copy -->
+          <div id="pingLinkSection" class="hidden mt-4 space-y-2">
+            <div class="flex items-center gap-2">
+              <input id="pingLink" class="w-full border px-4 py-2 rounded-md text-sm" readonly />
+              <button onclick="copyPingLink()" class="bg-gray-800 text-white px-3 py-2 rounded-md text-sm">📋</button>
+            </div>
+
+            <!-- Share Options -->
+            <div class="flex flex-wrap gap-2 mt-3 justify-center text-sm">
+              <a id="waBtn" class="bg-green-100 text-green-800 px-3 py-1 rounded" target="_blank">WhatsApp</a>
+              <a id="viberBtn" class="bg-purple-100 text-purple-800 px-3 py-1 rounded" target="_blank">Viber</a>
+              <a id="msgrBtn" class="bg-blue-100 text-blue-800 px-3 py-1 rounded" target="_blank">Messenger</a>
+              <a id="instaBtn" class="bg-pink-100 text-pink-800 px-3 py-1 rounded" target="_blank">Instagram</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center text-sm text-gray-500 mt-20 pb-10">
-      © 2025 ClientUpdate — Built with love. Trusted by teams in 40+ countries.
-    </footer>
-
-    <!-- Supabase + Script -->
+    </div>
+    <!-- 🔹 Script -->
     <script type="module">
       import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
@@ -91,17 +109,9 @@
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6anlhdWFnam1lbWNhdmRpamZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU3NzIsImV4cCI6MjA2NjYwMTc3Mn0.Ys9M5m53wwS4Usa00FYuML1Hq6KJtqQCO2oEobwlaK0'
       )
 
-      document.getElementById('logo').onchange = (e) => {
-        const file = e.target.files[0]
-        if (file) {
-          const url = URL.createObjectURL(file)
-          const img = document.getElementById('logoPreview')
-          img.src = url
-          img.classList.remove('hidden')
-        }
-      }
+      let latestPingLink = ''
 
-      document.getElementById('sendBtn').onclick = async () => {
+      document.getElementById('previewBtn').onclick = async () => {
         const company = document.getElementById('company').value
         const client = document.getElementById('client').value
         const message = document.getElementById('message').value
@@ -111,77 +121,63 @@
         let logoUrl = ''
         let fileUrl = ''
 
-        // Upload Logo
         if (logoInput.files.length > 0) {
-          const logoFile = logoInput.files[0]
-          const logoName = Date.now() + '_logo_' + logoFile.name
-          const { error: logoErr } = await supabase.storage.from('uploads').upload(logoName, logoFile)
-          if (!logoErr) {
-            const { data: logoLink } = supabase.storage.from('uploads').getPublicUrl(logoName)
-            logoUrl = logoLink.publicUrl
-          }
+          const logo = logoInput.files[0]
+          const fileName = Date.now() + '_logo_' + logo.name
+          await supabase.storage.from('uploads').upload(fileName, logo)
+          const { data } = supabase.storage.from('uploads').getPublicUrl(fileName)
+          logoUrl = data.publicUrl
         }
 
-        // Upload Project File
         if (fileInput.files.length > 0) {
-          const projFile = fileInput.files[0]
-          const fileName = Date.now() + '_project_' + projFile.name
-          const { error: projErr } = await supabase.storage.from('uploads').upload(fileName, projFile)
-          if (!projErr) {
-            const { data: fileLink } = supabase.storage.from('uploads').getPublicUrl(fileName)
-            fileUrl = fileLink.publicUrl
-          }
+          const file = fileInput.files[0]
+          const fileName = Date.now() + '_file_' + file.name
+          await supabase.storage.from('uploads').upload(fileName, file)
+          const { data } = supabase.storage.from('uploads').getPublicUrl(fileName)
+          fileUrl = data.publicUrl
         }
 
-        // Popuni karticu
-        document.getElementById('pingCompany').innerText = company
-        document.getElementById('pingClient').innerText = 'To: ' + client
-        document.getElementById('pingMessage').innerText = message
+        // Preview content
+        document.getElementById('previewCompany').innerText = company
+        document.getElementById('previewClient').innerText = 'To: ' + client
+        document.getElementById('previewMessage').innerText = message
 
-        // Logo
-        const pingLogo = document.getElementById('pingLogo')
+        const logoEl = document.getElementById('previewLogo')
         if (logoUrl) {
-          pingLogo.src = logoUrl
-          pingLogo.classList.remove('hidden')
-        } else {
-          pingLogo.classList.add('hidden')
-        }
+          logoEl.src = logoUrl
+          logoEl.classList.remove('hidden')
+        } else logoEl.classList.add('hidden')
 
-        // Fajl
-        const pingFileWrapper = document.getElementById('pingFileWrapper')
+        const fileEl = document.getElementById('previewFileLink')
         if (fileUrl) {
-          document.getElementById('pingFileLink').href = fileUrl
-          pingFileWrapper.classList.remove('hidden')
-        } else {
-          pingFileWrapper.classList.add('hidden')
-        }
+          fileEl.href = fileUrl
+          fileEl.classList.remove('hidden')
+        } else fileEl.classList.add('hidden')
 
-        document.getElementById('pingCardContainer').classList.remove('hidden')
+        document.getElementById('pingLinkSection').classList.add('hidden')
+        document.getElementById('previewModal').classList.remove('hidden')
       }
 
-      // Copy to clipboard
-      window.copyPing = () => {
-        const company = document.getElementById('pingCompany').innerText
-        const client = document.getElementById('pingClient').innerText
-        const message = document.getElementById('pingMessage').innerText
-        const file = document.getElementById('pingFileLink').href
-        const logo = document.getElementById('pingLogo').src
+      window.closePreview = () => {
+        document.getElementById('previewModal').classList.add('hidden')
+      }
 
-        const output = `
-ClientUpdate Ping:
+      window.copyPingLink = () => {
+        navigator.clipboard.writeText(latestPingLink)
+      }
 
-🧾 ${company}
-📩 ${client}
-📝 ${message}
-${file ? `📎 File: ${file}` : ''}
-${logo ? `🏷️ Logo: ${logo}` : ''}
-        `.trim()
+      document.getElementById('generateLinkBtn').onclick = () => {
+        // 👇 Dummy ping ID za sad (npr. abc123)
+        latestPingLink = `https://clientupdate.vercel.app/ping/abc123`
+        const pingInput = document.getElementById('pingLink')
+        pingInput.value = latestPingLink
+        document.getElementById('pingLinkSection').classList.remove('hidden')
 
-        navigator.clipboard.writeText(output)
-        document.getElementById('copyConfirm').classList.remove('hidden')
-        setTimeout(() => {
-          document.getElementById('copyConfirm').classList.add('hidden')
-        }, 2000)
+        // Generiši share dugmad
+        document.getElementById('waBtn').href = `https://wa.me/?text=${encodeURIComponent(latestPingLink)}`
+        document.getElementById('viberBtn').href = `viber://forward?text=${encodeURIComponent(latestPingLink)}`
+        document.getElementById('msgrBtn').href = `https://m.me/?link=${encodeURIComponent(latestPingLink)}`
+        document.getElementById('instaBtn').href = `https://www.instagram.com/` // Instagram nema direktno deljenje, samo copy
       }
     </script>
   </body>
